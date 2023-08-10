@@ -1,0 +1,84 @@
+<div class="container" style="height: 100vh;">
+
+  <div class="d-flex" style="height: 100%;">
+
+    <mat-card class="title-center mx-auto my-auto w-25 p-4">
+      <div class="text-center mb-5">
+        <mat-card-title>
+          <h2>
+            Quotation
+          </h2>
+        </mat-card-title>
+      </div>
+
+      <mat-card-content class="mb-3">
+        <form [formGroup]="quotation" (ngSubmit)="submit()">
+          <div formArrayName="age">
+            <div *ngFor="let control of ageControls.controls; let i = index, let first = first, let last = last" class="d-flex">
+              <mat-form-field appearance="outline">
+                <mat-label>Age {{ i + 1 }}</mat-label>
+                <input matInput [formControlName]="i" type="number">
+
+              </mat-form-field>
+              <button *ngIf="!first" mat-icon-button color="warn" (click)="removeAgeControl(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button *ngIf="last" mat-icon-button color="primary" (click)="addAgeControl()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Currency</mat-label>
+              <mat-select formControlName="currency_id" required>
+                <mat-option value="EUR">EUR</mat-option>
+                <mat-option value="GBP">GBP</mat-option>
+                <mat-option value="USD">USD</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startDatePicker" formControlName="start_date" required>
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="mb-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="endDatePicker" formControlName="end_date" required>
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <button mat-raised-button color="primary" type="submit">Save</button>
+        </form>
+
+        <ng-container *ngIf="quotationResult != null">
+          <div class="mt-3">
+            <strong>TOTAL</strong>: <span>{{quotationResult.total | currency: quotationResult.currency_id}}</span>
+
+          </div>
+
+        </ng-container>
+
+
+
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+
+
+
+
+</div>
+
